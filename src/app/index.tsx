@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Animated,
@@ -24,9 +18,7 @@ import { StatusBar } from "expo-status-bar";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-// ============================================================
 // GAME CONFIGURATION
-// ============================================================
 
 const GRID_SIZE = 20;
 
@@ -40,9 +32,7 @@ const SPEED_STEP = 4;
 
 const HIGH_SCORE_KEY = "SNAKE_FULL_SCREEN_HIGH_SCORE";
 
-// ============================================================
 // TYPES
-// ============================================================
 
 type Point = {
   x: number;
@@ -53,9 +43,7 @@ type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
 type GameStatus = "idle" | "countdown" | "playing" | "paused" | "gameover";
 
-// ============================================================
 // CONSTANTS
-// ============================================================
 
 const DIRECTIONS: Record<Direction, Point> = {
   UP: { x: 0, y: -1 },
@@ -71,9 +59,7 @@ const INITIAL_SNAKE: Point[] = [
   { x: 7, y: 10 },
 ];
 
-// ============================================================
 // HELPERS
-// ============================================================
 
 function getSpeed(score: number) {
   return Math.max(MIN_SPEED, START_SPEED - score * SPEED_STEP);
@@ -118,14 +104,10 @@ function createFood(snake: Point[]): Point {
   return freeCells[Math.floor(Math.random() * freeCells.length)];
 }
 
-// ============================================================
 // COMPONENT
-// ============================================================
 
 export default function SnakeGame() {
-  // ==========================================================
   // STATE
-  // ==========================================================
 
   const [snake, setSnake] = useState<Point[]>(INITIAL_SNAKE);
 
@@ -141,9 +123,7 @@ export default function SnakeGame() {
 
   const [countdown, setCountdown] = useState(3);
 
-  // ==========================================================
   // REFS
-  // ==========================================================
 
   const snakeRef = useRef<Point[]>(INITIAL_SNAKE);
 
@@ -165,9 +145,7 @@ export default function SnakeGame() {
 
   const countdownTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // ==========================================================
   // ANIMATIONS
-  // ==========================================================
 
   const foodPulse = useRef(new Animated.Value(1)).current;
 
@@ -179,9 +157,7 @@ export default function SnakeGame() {
 
   const particleScale = useRef(new Animated.Value(0)).current;
 
-  // ==========================================================
   // PARTICLE POSITIONS
-  // ==========================================================
 
   const particles = useMemo(
     () =>
@@ -193,9 +169,7 @@ export default function SnakeGame() {
     [],
   );
 
-  // ==========================================================
   // KEEP REFS UPDATED
-  // ==========================================================
 
   useEffect(() => {
     snakeRef.current = snake;
@@ -221,9 +195,7 @@ export default function SnakeGame() {
     gameStatusRef.current = gameStatus;
   }, [gameStatus]);
 
-  // ==========================================================
   // LOAD HIGH SCORE
-  // ==========================================================
 
   useEffect(() => {
     loadHighScore();
@@ -256,9 +228,7 @@ export default function SnakeGame() {
     }
   };
 
-  // ==========================================================
   // SAVE HIGH SCORE
-  // ==========================================================
 
   const saveHighScore = async (value: number) => {
     try {
@@ -268,9 +238,7 @@ export default function SnakeGame() {
     }
   };
 
-  // ==========================================================
   // FOOD ANIMATION
-  // ==========================================================
 
   useEffect(() => {
     const animation = Animated.loop(
@@ -296,9 +264,7 @@ export default function SnakeGame() {
     return () => animation.stop();
   }, [foodPulse]);
 
-  // ==========================================================
   // PARTICLE EFFECT
-  // ==========================================================
 
   const playFoodEffect = useCallback(() => {
     particleOpacity.setValue(1);
@@ -321,9 +287,7 @@ export default function SnakeGame() {
     ]).start();
   }, [particleOpacity, particleScale]);
 
-  // ==========================================================
   // GAME OVER EFFECT
-  // ==========================================================
 
   const playGameOverEffect = useCallback(() => {
     Animated.sequence([
@@ -373,9 +337,7 @@ export default function SnakeGame() {
     ]).start();
   }, [boardShake, screenFlash]);
 
-  // ==========================================================
   // HAPTIC FOOD
-  // ==========================================================
 
   const foodHaptic = async () => {
     try {
@@ -383,9 +345,7 @@ export default function SnakeGame() {
     } catch {}
   };
 
-  // ==========================================================
   // HAPTIC GAME OVER
-  // ==========================================================
 
   const gameOverHaptic = async () => {
     try {
@@ -393,9 +353,7 @@ export default function SnakeGame() {
     } catch {}
   };
 
-  // ==========================================================
   // CHANGE DIRECTION
-  // ==========================================================
 
   const changeDirection = useCallback((newDirection: Direction) => {
     const currentDirection = directionRef.current;
@@ -407,9 +365,7 @@ export default function SnakeGame() {
     nextDirectionRef.current = newDirection;
   }, []);
 
-  // ==========================================================
   // SWIPE CONTROLS
-  // ==========================================================
 
   const panResponder = useMemo(
     () =>
@@ -445,9 +401,7 @@ export default function SnakeGame() {
     [changeDirection],
   );
 
-  // ==========================================================
   // GAME OVER
-  // ==========================================================
 
   const gameOver = useCallback(async () => {
     if (gameStatusRef.current === "gameover") {
@@ -474,9 +428,7 @@ export default function SnakeGame() {
     }
   }, [playGameOverEffect]);
 
-  // ==========================================================
   // GAME TICK
-  // ==========================================================
 
   const gameTick = useCallback(() => {
     if (gameStatusRef.current !== "playing") {
@@ -501,9 +453,7 @@ export default function SnakeGame() {
       y: head.y + movement.y,
     };
 
-    // --------------------------------------------------------
     // WALL COLLISION
-    // --------------------------------------------------------
 
     if (
       newHead.x < 0 ||
@@ -517,9 +467,7 @@ export default function SnakeGame() {
 
     const eatingFood = isSamePoint(newHead, currentFood);
 
-    // --------------------------------------------------------
     // SELF COLLISION
-    // --------------------------------------------------------
 
     const bodyToCheck = eatingFood ? currentSnake : currentSnake.slice(0, -1);
 
@@ -532,15 +480,11 @@ export default function SnakeGame() {
       return;
     }
 
-    // --------------------------------------------------------
     // MOVE SNAKE
-    // --------------------------------------------------------
 
     let newSnake = [newHead, ...currentSnake];
 
-    // --------------------------------------------------------
     // EAT FOOD
-    // --------------------------------------------------------
 
     if (eatingFood) {
       const newScore = scoreRef.current + 1;
@@ -568,18 +512,14 @@ export default function SnakeGame() {
 
     setSnake(newSnake);
 
-    // --------------------------------------------------------
     // NEXT TICK
-    // --------------------------------------------------------
 
     if (gameStatusRef.current === "playing") {
       timerRef.current = setTimeout(gameTick, speedRef.current);
     }
   }, [gameOver, playFoodEffect]);
 
-  // ==========================================================
   // START GAME LOOP
-  // ==========================================================
 
   const beginPlaying = useCallback(() => {
     gameStatusRef.current = "playing";
@@ -590,9 +530,7 @@ export default function SnakeGame() {
     timerRef.current = setTimeout(gameTick, speedRef.current);
   }, [gameTick]);
 
-  // ==========================================================
   // COUNTDOWN
-  // ==========================================================
 
   const startCountdown = useCallback(() => {
     if (countdownTimerRef.current) {
@@ -622,9 +560,7 @@ export default function SnakeGame() {
     }, 800);
   }, [beginPlaying]);
 
-  // ==========================================================
   // RESET GAME
-  // ==========================================================
 
   const resetGame = useCallback(() => {
     if (timerRef.current) {
@@ -659,9 +595,7 @@ export default function SnakeGame() {
     startCountdown();
   }, [startCountdown]);
 
-  // ==========================================================
   // PAUSE / RESUME
-  // ==========================================================
 
   const togglePause = () => {
     if (gameStatusRef.current === "playing") {
@@ -684,9 +618,7 @@ export default function SnakeGame() {
     }
   };
 
-  // ==========================================================
   // RENDER SNAKE
-  // ==========================================================
 
   const renderSnake = () => {
     return snake.map((segment, index) => {
@@ -719,9 +651,7 @@ export default function SnakeGame() {
     });
   };
 
-  // ==========================================================
   // EYE POSITION
-  // ==========================================================
 
   const getEyePosition = (currentDirection: Direction, firstEye: boolean) => {
     const offset = CELL_SIZE * 0.23;
@@ -753,9 +683,7 @@ export default function SnakeGame() {
     };
   };
 
-  // ==========================================================
   // RENDER FOOD
-  // ==========================================================
 
   const renderFood = () => {
     return (
@@ -781,9 +709,7 @@ export default function SnakeGame() {
     );
   };
 
-  // ==========================================================
   // RENDER PARTICLES
-  // ==========================================================
 
   const renderParticles = () => {
     return particles.map((particle) => {
@@ -820,25 +746,19 @@ export default function SnakeGame() {
     });
   };
 
-  // ==========================================================
   // LEVEL PROGRESS
-  // ==========================================================
 
   const level = getLevel(score);
 
   const levelProgress = (score % 5) / 5;
 
-  // ==========================================================
   // SPEED DISPLAY
-  // ==========================================================
 
   const speedPercent = Math.round(
     ((START_SPEED - speedRef.current) / (START_SPEED - MIN_SPEED)) * 100,
   );
 
-  // ==========================================================
   // MAIN UI
-  // ==========================================================
 
   return (
     <View style={styles.container} {...panResponder.panHandlers}>
@@ -1134,9 +1054,7 @@ export default function SnakeGame() {
   );
 }
 
-// ============================================================
 // STYLES
-// ============================================================
 
 const styles = StyleSheet.create({
   container: {
