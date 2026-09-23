@@ -764,18 +764,14 @@ export default function SnakeGame() {
     <View style={styles.container} {...panResponder.panHandlers}>
       <StatusBar hidden />
 
-      {/* =====================================================
-          BACKGROUND
-      ===================================================== */}
+      {/*BACKGROUND*/}
 
       <LinearGradient
         colors={["#050807", "#08110D", "#020403"]}
         style={StyleSheet.absoluteFill}
       />
 
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
+      {/*HEADER*/}
 
       <View style={styles.header}>
         <View>
@@ -803,9 +799,7 @@ export default function SnakeGame() {
         </View>
       </View>
 
-      {/* =====================================================
-          LEVEL BAR
-      ===================================================== */}
+      {/*LEVEL BAR*/}
 
       <View style={styles.levelRow}>
         <Text style={styles.levelText}>LEVEL {level}</Text>
@@ -824,9 +818,7 @@ export default function SnakeGame() {
         <Text style={styles.nextLevelText}>{5 - (score % 5)} FOOD</Text>
       </View>
 
-      {/* =====================================================
-          BOARD
-      ===================================================== */}
+      {/*BOARD*/}
 
       <Animated.View
         style={[
@@ -881,9 +873,7 @@ export default function SnakeGame() {
             {renderParticles()}
           </View>
 
-          {/* =================================================
-              IDLE OVERLAY
-          ================================================= */}
+          {/*IDLE OVERLAY*/}
 
           {gameStatus === "idle" && (
             <View style={styles.overlay}>
@@ -907,9 +897,7 @@ export default function SnakeGame() {
             </View>
           )}
 
-          {/* =================================================
-              COUNTDOWN OVERLAY
-          ================================================= */}
+          {/*COUNTDOWN OVERLAY*/}
 
           {gameStatus === "countdown" && (
             <View style={styles.overlay}>
@@ -919,9 +907,9 @@ export default function SnakeGame() {
             </View>
           )}
 
-          {/* =================================================
+          {/*
               PAUSE OVERLAY
-          ================================================= */}
+          */}
 
           {gameStatus === "paused" && (
             <View style={styles.overlay}>
@@ -943,9 +931,9 @@ export default function SnakeGame() {
             </View>
           )}
 
-          {/* =================================================
+          {/*
               GAME OVER OVERLAY
-          ================================================= */}
+          */}
 
           {gameStatus === "gameover" && (
             <View style={styles.overlay}>
@@ -987,9 +975,9 @@ export default function SnakeGame() {
         />
       </Animated.View>
 
-      {/* =====================================================
+      {/* 
           INFORMATION
-      ===================================================== */}
+       */}
 
       <View style={styles.infoRow}>
         <View style={styles.infoBox}>
@@ -1019,9 +1007,9 @@ export default function SnakeGame() {
         </View>
       </View>
 
-      {/* =====================================================
+      {/* 
           PAUSE BUTTON
-      ===================================================== */}
+       */}
 
       {(gameStatus === "playing" || gameStatus === "paused") && (
         <TouchableOpacity
@@ -1035,9 +1023,9 @@ export default function SnakeGame() {
         </TouchableOpacity>
       )}
 
-      {/* =====================================================
+      {/* 
           FOOTER
-      ===================================================== */}
+       */}
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>SWIPE TO MOVE</Text>
@@ -1066,9 +1054,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 
-  // ----------------------------------------------------------
   // HEADER
-  // ----------------------------------------------------------
 
   header: {
     width: "100%",
@@ -1131,9 +1117,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
 
-  // ----------------------------------------------------------
   // LEVEL
-  // ----------------------------------------------------------
 
   levelRow: {
     width: BOARD_SIZE,
@@ -1174,9 +1158,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
 
-  // ----------------------------------------------------------
   // BOARD
-  // ----------------------------------------------------------
 
   boardWrapper: {
     width: BOARD_SIZE,
@@ -1220,9 +1202,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0C1A11",
   },
 
-  // ----------------------------------------------------------
   // SNAKE
-  // ----------------------------------------------------------
 
   snakeSegment: {
     position: "absolute",
@@ -1250,9 +1230,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#07100B",
   },
 
-  // ----------------------------------------------------------
   // FOOD
-  // ----------------------------------------------------------
 
   food: {
     position: "absolute",
@@ -1282,9 +1260,7 @@ const styles = StyleSheet.create({
     left: 4,
   },
 
-  // ----------------------------------------------------------
   // PARTICLES
-  // ----------------------------------------------------------
 
   particleContainer: {
     position: "absolute",
@@ -1304,9 +1280,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#B7FF73",
   },
 
-  // ----------------------------------------------------------
   // OVERLAY
-  // ----------------------------------------------------------
 
   overlay: {
     ...StyleSheet.absoluteFill,
@@ -1378,15 +1352,14 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
   },
 
-  // ----------------------------------------------------------
   // COUNTDOWN
-  // ----------------------------------------------------------
+
   countdownText: {
     color: "#C2FF9B",
     fontSize: 80,
     fontWeight: "900",
     textShadowColor: "#70FF50",
-    textShadowOffset: { width: 0, height: 0 }, // Adjust width/height if you want the shadow offset
+    textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 20,
   },
 
@@ -1398,9 +1371,7 @@ const styles = StyleSheet.create({
     marginTop: -8,
   },
 
-  // ----------------------------------------------------------
   // GAME OVER
-  // ----------------------------------------------------------
 
   gameOverIcon: {
     color: "#FF626B",
@@ -1439,9 +1410,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  // ----------------------------------------------------------
   // FLASH
-  // ----------------------------------------------------------
 
   flash: {
     ...StyleSheet.absoluteFill,
@@ -1451,9 +1420,7 @@ const styles = StyleSheet.create({
     pointerEvents: "none",
   },
 
-  // ----------------------------------------------------------
   // INFORMATION
-  // ----------------------------------------------------------
 
   infoRow: {
     width: BOARD_SIZE,
@@ -1481,9 +1448,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 
-  // ----------------------------------------------------------
   // PAUSE BUTTON
-  // ----------------------------------------------------------
 
   pauseButton: {
     marginTop: 10,
@@ -1502,9 +1467,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 
-  // ----------------------------------------------------------
   // FOOTER
-  // ----------------------------------------------------------
 
   footer: {
     flexDirection: "row",
