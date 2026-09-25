@@ -22,7 +22,9 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const GRID_SIZE = 20;
 
-const BOARD_SIZE = Math.min(SCREEN_WIDTH - 16, 440);
+const BOARD_PADDING = 8;
+
+const BOARD_SIZE = Math.min(SCREEN_WIDTH - BOARD_PADDING * 2, SCREEN_HEIGHT - 180);
 
 const CELL_SIZE = BOARD_SIZE / GRID_SIZE;
 
@@ -1047,10 +1049,13 @@ export default function SnakeGame() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     backgroundColor: "#030504",
     alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: 20,
+    justifyContent: "space-between",
+    paddingTop: 14,
+    paddingBottom: 10,
+    paddingHorizontal: BOARD_PADDING,
     overflow: "hidden",
   },
 
@@ -1058,7 +1063,8 @@ const styles = StyleSheet.create({
 
   header: {
     width: "100%",
-    paddingHorizontal: 18,
+    maxWidth: BOARD_SIZE,
+    paddingHorizontal: 8,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -1120,10 +1126,12 @@ const styles = StyleSheet.create({
   // LEVEL
 
   levelRow: {
-    width: BOARD_SIZE,
+    width: "100%",
+    maxWidth: BOARD_SIZE,
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 9,
+    paddingHorizontal: 8,
   },
 
   levelText: {
@@ -1163,6 +1171,7 @@ const styles = StyleSheet.create({
   boardWrapper: {
     width: BOARD_SIZE,
     height: BOARD_SIZE,
+    maxWidth: "100%",
   },
 
   board: {
@@ -1423,10 +1432,12 @@ const styles = StyleSheet.create({
   // INFORMATION
 
   infoRow: {
-    width: BOARD_SIZE,
+    width: "100%",
+    maxWidth: BOARD_SIZE,
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 12,
+    paddingHorizontal: 8,
   },
 
   infoBox: {
@@ -1472,8 +1483,9 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
-    marginBottom: 8,
+    justifyContent: "center",
+    marginTop: 8,
+    marginBottom: 2,
     gap: 8,
   },
 
